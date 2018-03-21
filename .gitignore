@@ -9,4 +9,4 @@
 
 #
 outputs
-credentials.tfvars
+*.tfvars

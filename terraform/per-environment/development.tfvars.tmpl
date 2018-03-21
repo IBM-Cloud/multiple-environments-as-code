@@ -1,0 +1,23 @@
+environment_name = "development"
+
+space_developers = [""]
+
+cluster_datacenter = ""
+
+cluster_public_vlan_id = ""
+
+cluster_private_vlan_id = ""
+
+cluster_workers = [
+  {
+    name   = "worker-1"
+    action = "add"
+  },
+  {
+    name   = "worker-2"
+    action = "add"
+  },
+]
+
+# Find available machine types with: bx cs machine-types dal13
+cluster_machine_type = "u2c.2x4"
