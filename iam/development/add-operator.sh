@@ -1,12 +1,25 @@
 #!/bin/bash
 
 USER=$1
+GROUP="Example-Operator-Role"
 
-# Resource Group: Viewer
-bx iam user-policy-create $USER --roles Viewer --resource-type resource-group --resource "default"
+# Check if the group exist
+if bx iam access-group $GROUP >/dev/null; then
+  echo "Role already exists"
+else
+  # Create the access group for the role if the group does not exist
+  bx iam access-group-create $GROUP --description "used by the multiple-environments-as-code tutorial"
 
-# Platform Access Roles in the Resource Group: Operator, Viewer
-bx iam user-policy-create $USER --roles Operator,Viewer --resource-group-name "default"
+  # Set the permissions for this group
+  # Resource Group: Viewer
+  bx iam access-group-policy-create $GROUP --roles Viewer --resource-type resource-group --resource "default"
 
-# Monitoring: Administrator, Editor, Viewer
-bx iam user-policy-create $USER --roles Administrator,Editor,Viewer --service-name monitoring
+  # Platform Access Roles in the Resource Group: Operator, Viewer
+  bx iam access-group-policy-create $GROUP --roles Operator,Viewer --resource-group-name "default"
+
+  # Monitoring: Administrator, Editor, Viewer
+  bx iam access-group-policy-create $GROUP --roles Administrator,Editor,Viewer --service-name monitoring
+fi
+
+# Add the user to the group
+bx iam access-group-user-add $GROUP $USER
