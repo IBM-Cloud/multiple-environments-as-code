@@ -2,7 +2,7 @@
 	SHELL := /bin/bash
 
 validate:
-	@for i in $$(find -type f -name "*.tf" -exec dirname {} \;); do \
+	@for i in $$(find . -type f -name "*.tf" -exec dirname {} \;); do \
 		terraform validate -var-file=../credentials.tfvars -var-file=global.tfvars "$$i"; \
 		if [ $$? -ne 0 ]; then \
 			echo "Failed Terraform file validation on file $${i}"; \

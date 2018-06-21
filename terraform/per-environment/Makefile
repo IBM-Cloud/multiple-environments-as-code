@@ -1,25 +1,25 @@
 .ONESHELL:
 	SHELL := /bin/bash
 
-validate: set-env
-	@for i in $$(find -type f -name "*.tf" -exec dirname {} \;); do \
-		terraform validate -var-file=../credentials.tfvars -var-file=$(ENV).tfvars  "$$i"; \
-		if [ $$? -ne 0 ]; then \
-			echo "Failed Terraform file validation on file $${i}"; \
-			echo; \
-			exit 1; \
-		fi; \
-	done
-
 set-env:
 	@if [ -z $(ENV) ]; then\
 		echo "ENV was not set"; exit 10;\
 	fi
 	@if [ -d "terraform.tfstate.d/$(ENV)" ]; then\
 		terraform workspace select $(ENV);\
-	else
+	else \
 		terraform workspace new $(ENV);\
 	fi
+
+validate: set-env
+	@for i in $$(find . -type f -name "*.tf" -exec dirname {} \;); do \
+		terraform validate -var-file=../credentials.tfvars -var-file=$(ENV).tfvars "$$i"; \
+		if [ $$? -ne 0 ]; then \
+			echo "Failed Terraform file validation on file $${i}"; \
+			echo; \
+			exit 1; \
+		fi; \
+	done
 
 init: set-env
 	@terraform init
