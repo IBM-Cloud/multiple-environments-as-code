@@ -8,20 +8,7 @@ cluster_public_vlan_id = ""
 
 cluster_private_vlan_id = ""
 
-cluster_workers = [
-  {
-    name   = "worker-1"
-    action = "add"
-  },
-  {
-    name   = "worker-2"
-    action = "add"
-  },
-  {
-    name   = "worker-3"
-    action = "add"
-  },
-]
+cluster_worker_num = 3
 
 # Find available machine types with: bx cs machine-types <location>
 cluster_machine_type = "b2c.4x16"

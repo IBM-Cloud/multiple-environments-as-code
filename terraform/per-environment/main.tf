@@ -23,7 +23,7 @@ resource "ibm_container_cluster" "cluster" {
   space_guid      = "${ibm_space.space.id}"
   account_guid    = "${data.terraform_remote_state.global.account_guid}"
   machine_type    = "${var.cluster_machine_type}"
-  workers         = "${var.cluster_workers}"
+  worker_num      = "${var.cluster_worker_num}"
   public_vlan_id  = "${var.cluster_public_vlan_id}"
   private_vlan_id = "${var.cluster_private_vlan_id}"
 }
