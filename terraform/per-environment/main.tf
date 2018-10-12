@@ -26,13 +26,14 @@ resource "ibm_container_cluster" "cluster" {
   worker_num      = "${var.cluster_worker_num}"
   public_vlan_id  = "${var.cluster_public_vlan_id}"
   private_vlan_id = "${var.cluster_private_vlan_id}"
+  hardware        = "${var.cluster_hardware}"
 }
 
 # bind the database service to the cluster
 resource "ibm_container_bind_service" "bind_database" {
   cluster_name_id             = "${ibm_container_cluster.cluster.id}"
-  service_instance_space_guid = "${ibm_space.space.id}"
-  service_instance_name_id    = "${ibm_service_instance.database.id}"
+  space_guid                  = "${ibm_space.space.id}"
+  service_instance_id         = "${ibm_service_instance.database.id}"
   namespace_id                = "default"
   account_guid                = "${data.terraform_remote_state.global.account_guid}"
   org_guid                    = "${data.terraform_remote_state.global.org_guid}"
@@ -52,8 +53,8 @@ resource "ibm_service_instance" "objectstorage" {
 # bind the cloud object storage service to the cluster
 resource "ibm_container_bind_service" "bind_objectstorage" {
   cluster_name_id             = "${ibm_container_cluster.cluster.id}"
-  service_instance_space_guid = "${ibm_space.space.id}"
-  service_instance_name_id    = "${ibm_service_instance.objectstorage.id}"
+  space_guid                  = "${ibm_space.space.id}"
+  service_instance_id         = "${ibm_service_instance.objectstorage.id}"
   namespace_id                = "default"
   account_guid                = "${data.terraform_remote_state.global.account_guid}"
   org_guid                    = "${data.terraform_remote_state.global.org_guid}"
