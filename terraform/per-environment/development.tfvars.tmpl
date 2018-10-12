@@ -4,11 +4,15 @@ space_developers = [ ]
 
 cluster_datacenter = ""
 
+# Find the values for vlans with: ibmcloud cs vlans <datacenter>
 cluster_public_vlan_id = ""
 
 cluster_private_vlan_id = ""
 
 cluster_worker_num = 2
 
-# Find available machine types with: bx cs machine-types <location>
+# Find available machine types with: ibmcloud cs machine-types <datacenter>
 cluster_machine_type = "u2c.2x4"
+
+# Other option is dedicated
+cluster_hardware = "shared"
