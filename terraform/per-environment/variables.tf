@@ -26,3 +26,5 @@ variable "cluster_private_vlan_id" {}
 variable "cluster_machine_type" {}
 
 variable "cluster_worker_num" {}
+
+variable "cluster_hardware" {}
