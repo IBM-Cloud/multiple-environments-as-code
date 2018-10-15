@@ -28,3 +28,5 @@ variable "cluster_machine_type" {}
 variable "cluster_worker_num" {}
 
 variable "cluster_hardware" {}
+
+variable "resource_quota" {}
