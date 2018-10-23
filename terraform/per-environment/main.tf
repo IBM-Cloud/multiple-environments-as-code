@@ -7,56 +7,17 @@ resource "ibm_space" "space" {
   developers = "${var.space_developers}"
 }
 
-resource "ibm_iam_access_group" "accgrp" {
-  name        = "${var.access_group_name}"
-  description = "${var.access_group_description}"
-}
-
 resource "ibm_resource_group" "group" {
   name     = "${var.environment_name}"
   quota_id = "${data.ibm_resource_quota.quota.id}"
-}
-
-resource "ibm_iam_access_group_policy" "resourcepolicy" {
-  access_group_id = "${ibm_iam_access_group.accgrp.id}"
-  roles           = "${var.resource_group_roles}"
-
-  resources = [{
-    resource_type = "resource-group"
-    resource      = "${ibm_resource_group.group.id}"
-  }]
-}
-
-resource "ibm_iam_access_group_policy" "platformaccesspolicy" {
-  access_group_id = "${ibm_iam_access_group.accgrp.id}"
-  roles        = "${var.platform_access_roles}"
-
-  resources = [{
-    resource_group_id = "${ibm_resource_group.group.id}"
-  }]
-}
-
-resource "ibm_iam_access_group_policy" "monitoringpolicy" {
-  access_group_id = "${ibm_iam_access_group.accgrp.id}"
-  roles        = "${var.monitoring_service_roles}"
-
-  resources = [{
-    service           = "monitoring"
-    resource_group_id = "${ibm_resource_group.group.id}"
-  }]
-}
-
-resource "ibm_iam_access_group_members" "accgroupmem" {
-  access_group_id = "${ibm_iam_access_group.accgrp.id}"
-  ibm_ids         = "${var.iam_access_members}"
 }
 
 # a database
 resource "ibm_resource_instance" "database" {
     name              = "database"
     service           = "cloudantnosqldb"
-    plan              = "lite"
-    location          = "global"
+    plan              = "${var.cloudantnosqldb_plan}"
+    location          = "${var.cloudantnosqldb_location}"
     resource_group_id = "${ibm_resource_group.group.id}"
 }
 
@@ -91,8 +52,8 @@ resource "ibm_container_bind_service" "bind_database" {
 resource "ibm_resource_instance" "objectstorage" {
     name              = "objectstorage"
     service           = "cloud-object-storage"
-    plan              = "standard"
-    location          = "global"
+    plan              = "${var.cloudobjectstorage_plan}"
+    location          = "${var.cloudobjectstorage_location}"
     resource_group_id = "${ibm_resource_group.group.id}"
 }
 # bind the cloud object storage service to the cluster

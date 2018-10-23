@@ -31,29 +31,10 @@ variable "cluster_hardware" {}
 
 variable "resource_quota" {}
 
-variable "access_group_name" {}
+variable "cloudantnosqldb_plan" {}
 
-variable "access_group_description" {
-  type = "string"
-  default = "used by the multiple-environments-as-code tutorial"
-}
+variable "cloudantnosqldb_location" {}
 
-variable "iam_access_members"{
-  type = "list"
-  default = []
-}
+variable "cloudobjectstorage_plan" {}
 
-variable "resource_group_roles"{
-  type = "list"
-  default = []
-}
-
-variable "platform_access_roles"{
-  type = "list"
-  default = []
-}
-
-variable "monitoring_service_roles"{
-  type = "list"
-  default = []
-}
+variable "cloudobjectstorage_location" {}
