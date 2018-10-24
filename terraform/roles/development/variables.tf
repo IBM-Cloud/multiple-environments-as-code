@@ -1,3 +1,5 @@
+variable "ibmcloud_api_key" {}
+
 variable "access_group_name_developer_role" {}
 
 variable "access_group_name_tester_role" {}
