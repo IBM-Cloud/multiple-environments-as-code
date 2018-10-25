@@ -63,7 +63,7 @@ resource "ibm_container_worker_pool" "cluster_workerpool" {
 
 resource "ibm_container_worker_pool_zone_attachment" "cluster_zone" {
   cluster           = "${ibm_container_cluster.cluster.id}"
-  worker_pool       = "${ibm_container_worker_pool.cluster_workerpool.id}"
+  worker_pool       =  "${element(split("/",ibm_container_worker_pool.cluster_workerpool.id),1)}"
   zone              = "${var.cluster_datacenter}"
   public_vlan_id    = "${var.cluster_public_vlan_id}"
   private_vlan_id   = "${var.cluster_private_vlan_id}"
