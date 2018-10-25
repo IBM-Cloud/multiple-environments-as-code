@@ -15,9 +15,18 @@ resource "ibm_iam_access_group_policy" "resourcepolicy_developer" {
   }]
 }
 
+resource "ibm_iam_access_group_policy" "developer_platform_accesspolicy" {
+  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  roles        = ["Viewer"]
+
+  resources = [{
+    resource_group_id = "${data.terraform_remote_state.per_environment_dev.resource_group_id}"
+  }]
+}
+
 resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
   access_group_id = "${ibm_iam_access_group.developer_role.id}"
-  roles        = ["Administrator","Editor","Viewer"]
+  roles           = ["Administrator","Editor","Viewer"]
 
   resources = [{
     service           = "monitoring"
@@ -28,15 +37,6 @@ resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
 resource "ibm_iam_access_group_members" "developers" {
   access_group_id = "${ibm_iam_access_group.developer_role.id}"
   ibm_ids         = "${var.iam_access_members_developers}"
-}
-
-resource "ibm_iam_access_group_policy" "developer_platform_accesspolicy" {
-  access_group_id = "${ibm_iam_access_group.developer_role.id}"
-  roles        = ["Viewer"]
-
-  resources = [{
-    resource_group_id = "${data.terraform_remote_state.per_environment_dev.resource_group_id}"
-  }]
 }
 
 ###########################################
