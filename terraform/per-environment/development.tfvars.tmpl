@@ -2,6 +2,7 @@ environment_name = "development"
 
 space_developers = [ ]
 
+# Find the locations with: ibmcloud cs locations
 cluster_datacenter = ""
 
 # Find the values for vlans with: ibmcloud cs vlans <datacenter>
@@ -9,10 +10,25 @@ cluster_public_vlan_id = ""
 
 cluster_private_vlan_id = ""
 
-cluster_worker_num = 2
+worker_num = 2
 
 # Find available machine types with: ibmcloud cs machine-types <datacenter>
 cluster_machine_type = "u2c.2x4"
 
 # Other option is dedicated
 cluster_hardware = "shared"
+
+# Find available resource group quotas with: ibmcloud resource quotas
+resource_quota = "Trial Quota"
+
+# Plan for Cloudant database: lite or standard
+cloudantnosqldb_plan = "lite"
+
+# Find available locations with: ibmcloud catalog service cloudantnosqldb
+cloudantnosqldb_location = ""
+
+# Plan for Cloud Object Storage: lite or standard
+cloudobjectstorage_plan = "lite"
+
+# Find available locations with: ibmcloud catalog service cloud-object-storage
+cloudobjectstorage_location = "global"

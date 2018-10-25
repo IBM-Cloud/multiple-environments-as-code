@@ -25,6 +25,16 @@ variable "cluster_private_vlan_id" {}
 
 variable "cluster_machine_type" {}
 
-variable "cluster_worker_num" {}
+variable "worker_num" {}
 
 variable "cluster_hardware" {}
+
+variable "resource_quota" {}
+
+variable "cloudantnosqldb_plan" {}
+
+variable "cloudantnosqldb_location" {}
+
+variable "cloudobjectstorage_plan" {}
+
+variable "cloudobjectstorage_location" {}
