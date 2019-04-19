@@ -38,3 +38,11 @@ variable "cloudantnosqldb_location" {}
 variable "cloudobjectstorage_plan" {}
 
 variable "cloudobjectstorage_location" {}
+
+variable "logdna_plan" {}
+
+variable "logdna_location" {}
+
+variable "sysdig_plan" {}
+
+variable "sysdig_location" {}

@@ -35,6 +35,23 @@ resource "ibm_resource_instance" "objectstorage" {
     resource_group_id = "${ibm_resource_group.group.id}"
 }
 
+# a LogDNA service
+resource "ibm_resource_instance" "logging" {
+    name              = "logging"
+    service           = "logdna"
+    plan              = "${var.logdna_plan}"
+    location          = "${var.logdna_location}"
+    resource_group_id = "${ibm_resource_group.group.id}"
+}
+
+resource "ibm_resource_instance" "monitoring" {
+    name              = "monitoring"
+    service           = "sysdig-monitor"
+    plan              = "${var.sysdig_plan}"
+    location          = "${var.sysdig_location}"
+    resource_group_id = "${ibm_resource_group.group.id}"
+}
+
 #############################
 # Create a kubernetes cluster
 #############################

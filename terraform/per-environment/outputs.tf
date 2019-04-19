@@ -3,6 +3,13 @@ output "resource_group_id" {
   value = "${ibm_resource_group.group.id}"
 }
 
+output "logdna_instance_id" {
+  value = "${ibm_resource_instance.logging.id}"
+}
+
+output "sysdig_instance_id" {
+  value = "${ibm_resource_instance.monitoring.id}"
+}
 #generate a property file suitable for shell scripts with useful variables relating to the environment
 resource "local_file" "output" {
   content = <<EOF
