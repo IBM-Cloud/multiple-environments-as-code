@@ -31,6 +31,30 @@ resource "ibm_resource_instance" "objectstorage" {
     resource_group_id = "${ibm_resource_group.group.id}"
 }
 
+resource "ibm_resource_key" "databaseresourceKey" {
+  name                 = "databasekey"
+  role                 = "Editor"
+  resource_instance_id = "${ibm_resource_instance.database.id}"
+
+  //User can increase timeouts 
+  timeouts {
+    create = "10m"
+    delete = "10m"
+  }
+}
+
+resource "ibm_resource_key" "objectstorageresourceKey" {
+  name                 = "objectstoragekey"
+  role                 = "Editor"
+  resource_instance_id = "${ibm_resource_instance.objectstorage.id}"
+
+  //User can increase timeouts 
+  timeouts {
+    create = "10m"
+    delete = "10m"
+  }
+}
+
 # a LogDNA service
 resource "ibm_resource_instance" "logging" {
     name              = "logging"

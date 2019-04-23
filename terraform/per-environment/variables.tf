@@ -29,8 +29,6 @@ variable "worker_num" {}
 
 variable "cluster_hardware" {}
 
-variable "resource_quota" {}
-
 variable "cloudantnosqldb_plan" {}
 
 variable "cloudantnosqldb_location" {}
