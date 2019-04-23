@@ -9,12 +9,8 @@ resource "ibm_space" "space" {
 
 resource "ibm_resource_group" "group" {
   name     = "${var.environment_name}"
-  quota_id = "${data.ibm_resource_quota.quota.id}"
 }
 
-data "ibm_resource_quota" "quota" {
-  name = "${var.resource_quota}"
-}
 #######################################
 # Create services in the resource group
 #######################################
