@@ -9,12 +9,8 @@ resource "ibm_space" "space" {
 
 resource "ibm_resource_group" "group" {
   name     = "${var.environment_name}"
-  quota_id = "${data.ibm_resource_quota.quota.id}"
 }
 
-data "ibm_resource_quota" "quota" {
-  name = "${var.resource_quota}"
-}
 #######################################
 # Create services in the resource group
 #######################################
@@ -32,6 +28,23 @@ resource "ibm_resource_instance" "objectstorage" {
     service           = "cloud-object-storage"
     plan              = "${var.cloudobjectstorage_plan}"
     location          = "${var.cloudobjectstorage_location}"
+    resource_group_id = "${ibm_resource_group.group.id}"
+}
+
+# a LogDNA service
+resource "ibm_resource_instance" "logging" {
+    name              = "logging"
+    service           = "logdna"
+    plan              = "${var.logdna_plan}"
+    location          = "${var.logdna_location}"
+    resource_group_id = "${ibm_resource_group.group.id}"
+}
+
+resource "ibm_resource_instance" "monitoring" {
+    name              = "monitoring"
+    service           = "sysdig-monitor"
+    plan              = "${var.sysdig_plan}"
+    location          = "${var.sysdig_location}"
     resource_group_id = "${ibm_resource_group.group.id}"
 }
 
@@ -82,6 +95,7 @@ resource "ibm_container_bind_service" "bind_database" {
   org_guid                    = "${data.terraform_remote_state.global.org_guid}"
   space_guid                  = "${ibm_space.space.id}"
   resource_group_id           = "${ibm_resource_group.group.id}"
+  role                        = "manager"
 }
 
 
@@ -95,4 +109,5 @@ resource "ibm_container_bind_service" "bind_objectstorage" {
   org_guid                    = "${data.terraform_remote_state.global.org_guid}"
   space_guid                  = "${ibm_space.space.id}"
   resource_group_id           = "${ibm_resource_group.group.id}"
+  role                        = "writer"
 }

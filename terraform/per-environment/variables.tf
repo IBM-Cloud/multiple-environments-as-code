@@ -29,8 +29,6 @@ variable "worker_num" {}
 
 variable "cluster_hardware" {}
 
-variable "resource_quota" {}
-
 variable "cloudantnosqldb_plan" {}
 
 variable "cloudantnosqldb_location" {}
@@ -38,3 +36,11 @@ variable "cloudantnosqldb_location" {}
 variable "cloudobjectstorage_plan" {}
 
 variable "cloudobjectstorage_location" {}
+
+variable "logdna_plan" {}
+
+variable "logdna_location" {}
+
+variable "sysdig_plan" {}
+
+variable "sysdig_location" {}

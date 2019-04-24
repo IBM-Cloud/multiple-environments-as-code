@@ -18,9 +18,6 @@ cluster_machine_type = "u2c.2x4"
 # Other option is dedicated
 cluster_hardware = "shared"
 
-# Find available resource group quotas with: ibmcloud resource quotas
-resource_quota = "Trial Quota"
-
 # Plan for Cloudant database: lite or standard
 cloudantnosqldb_plan = "lite"
 
@@ -32,3 +29,15 @@ cloudobjectstorage_plan = "lite"
 
 # Find available locations with: ibmcloud catalog service cloud-object-storage
 cloudobjectstorage_location = "global"
+
+# Plan for LogDNA: lite, 7-day,14-day, 30-day
+logdna_plan = "lite"
+
+# Find available locations with: ibmcloud catalog service logdna
+logdna_location = ""
+
+# Plan for Sysdig-monitor: lite, graduated-tier
+sysdig_plan = "lite"
+
+# Find available locations with: ibmcloud catalog service sysdig-monitor
+sysdig_location = ""

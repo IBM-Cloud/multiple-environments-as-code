@@ -16,13 +16,22 @@ resource "ibm_iam_access_group_policy" "resourcepolicy_developer" {
   }]
 }
 
-resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
+resource "ibm_iam_access_group_policy" "developer_logging_policy" {
   access_group_id = "${ibm_iam_access_group.developer_role.id}"
-  roles        = ["Administrator","Editor","Viewer"]
+  roles           = ["Writer"]
 
   resources = [{
-    service           = "monitoring"
-    resource_group_id = "${data.terraform_remote_state.per_environment_test.resource_group_id}"
+    service           = "logdna"
+    resource_instance_id = "${data.terraform_remote_state.per_environment_dev.logdna_instance_id}"
+  }]
+}
+resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
+  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+  roles           = ["Writer"]
+
+  resources = [{
+    service           = "sysdig-monitor"
+    resource_instance_id = "${data.terraform_remote_state.per_environment_dev.sysdig_instance_id}"
   }]
 }
 
@@ -63,13 +72,22 @@ resource "ibm_iam_access_group_policy" "resourcepolicy_operator" {
   }]
 }
 
-resource "ibm_iam_access_group_policy" "operator_monitoring_policy" {
+resource "ibm_iam_access_group_policy" "operator_logging_policy" {
   access_group_id = "${ibm_iam_access_group.operator_role.id}"
-  roles        = ["Administrator","Editor","Viewer"]
+  roles           = ["Writer"]
 
   resources = [{
-    service           = "monitoring"
-    resource_group_id = "${data.terraform_remote_state.per_environment_test.resource_group_id}"
+    service           = "logdna"
+    resource_instance_id = "${data.terraform_remote_state.per_environment_prod.logdna_instance_id}"
+  }]
+}
+resource "ibm_iam_access_group_policy" "operator_monitoring_policy" {
+  access_group_id = "${ibm_iam_access_group.operator_role.id}"
+  roles           = ["Writer"]
+
+  resources = [{
+    service           = "sysdig-monitor"
+    resource_instance_id = "${data.terraform_remote_state.per_environment_prod.sysdig_instance_id}"
   }]
 }
 
