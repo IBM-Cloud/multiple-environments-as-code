@@ -25,8 +25,8 @@ resource "ibm_iam_access_group_policy" "operator_platform_accesspolicy" {
   }]
 }
 
-resource "ibm_iam_access_group_policy" "developer_logging_policy" {
-  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+resource "ibm_iam_access_group_policy" "operator_logging_policy" {
+  access_group_id = "${ibm_iam_access_group.operator_role.id}"
   roles           = ["Writer"]
 
   resources = [{
@@ -34,8 +34,8 @@ resource "ibm_iam_access_group_policy" "developer_logging_policy" {
     resource_instance_id = "${data.terraform_remote_state.per_environment_prod.logdna_instance_id}"
   }]
 }
-resource "ibm_iam_access_group_policy" "developer_monitoring_policy" {
-  access_group_id = "${ibm_iam_access_group.developer_role.id}"
+resource "ibm_iam_access_group_policy" "operator_monitoring_policy" {
+  access_group_id = "${ibm_iam_access_group.operator_role.id}"
   roles           = ["Writer"]
 
   resources = [{
