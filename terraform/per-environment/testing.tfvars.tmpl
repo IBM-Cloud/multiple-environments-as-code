@@ -2,17 +2,17 @@ environment_name = "testing"
 
 space_developers = [ ]
 
-# Find the locations with: ibmcloud cs locations
+# Find the locations with: ibmcloud ks zones
 cluster_datacenter = ""
 
-# Find the values for vlans with: ibmcloud cs vlans <datacenter>
+# Find the values for vlans with: ibmcloud ks vlans --zone <zone>
 cluster_public_vlan_id = ""
 
 cluster_private_vlan_id = ""
 
 worker_num = 3
 
-# Find available machine types with: ibmcloud cs machine-types <datacenter>
+# Find available machine types with: ibmcloud ks flavors --zone <zone>
 cluster_machine_type = "u2c.2x4"
 
 # Other option is dedicated
