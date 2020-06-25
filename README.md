@@ -4,7 +4,7 @@ The application deploys multiple environments with IBM Cloud CLI and Terraform. 
 
 > :warning: Running the scripts in this repository will incur charges on your IBM Cloud account.
 
-Refer to [this tutorial](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-plan-create-update-deployments#plan-create-and-update-deployment-environments) for instructions.
+Refer to [this tutorial](https://cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-plan-create-update-deployments) for instructions.
 
 ## License
 
