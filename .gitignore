@@ -10,3 +10,4 @@
 #
 outputs
 *.tfvars
+.vscode/settings.json
