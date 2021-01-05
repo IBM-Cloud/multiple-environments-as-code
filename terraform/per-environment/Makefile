@@ -28,8 +28,7 @@ update: set-env
 	@terraform get -update=true 1>/dev/null
 
 show: init update
-	@terraform show \
-		-module-depth=-1
+	@terraform show 
 
 plan: init update
 	@terraform plan \
