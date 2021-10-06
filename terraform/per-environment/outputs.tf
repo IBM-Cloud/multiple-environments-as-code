@@ -14,12 +14,15 @@ output "sysdig_instance_id" {
 #generate a property file suitable for shell scripts with useful variables relating to the environment
 resource "local_file" "output" {
   content = <<EOF
-CLUSTER_NAME=${ibm_container_vpc_cluster.cluster.name}
-CLUSTER_ID=${ibm_container_vpc_cluster.cluster.id}
-CLUSTER_INGRESS_HOSTNAME=${ibm_container_vpc_cluster.cluster.ingress_hostname}
+  VSI_IP=${ibm_is_floating_ip.vsi1_ip.address}
 EOF
 
 
   filename = "../outputs/${terraform.workspace}.env"
 }
 
+resource "local_file" "ssh-key" {
+  content         = tls_private_key.ssh.private_key_pem
+  filename        = "../outputs/${var.environment_name}_generated_private_key.pem"
+  file_permission = "0600"
+}

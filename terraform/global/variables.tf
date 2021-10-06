@@ -1,26 +1,10 @@
 variable "ibmcloud_api_key" {
 }
 
-variable "org_name" {
+variable "region" {
+  default = "us-south"
 }
 
-variable "org_managers" {
-  type    = list(string)
-  default = []
+variable "ibmcloud_timeout" {
+  default = 900
 }
-
-variable "org_users" {
-  type    = list(string)
-  default = []
-}
-
-variable "org_auditors" {
-  type    = list(string)
-  default = []
-}
-
-variable "org_billing_managers" {
-  type    = list(string)
-  default = []
-}
-
