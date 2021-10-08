@@ -1,14 +1,18 @@
-# create a new organization for the project
-resource "ibm_org" "organization" {
-  name             = var.org_name
-  managers         = var.org_managers
-  users            = var.org_users
-  auditors         = var.org_auditors
-  billing_managers = var.org_billing_managers
+## Create global account services here.
+## This could be the Activity Tracker.
+
+# Stub as example
+data "ibm_iam_account_settings" "iam_account_settings" {
 }
 
-# retrieve the account where the org was created
-data "ibm_account" "account" {
-  org_guid = ibm_org.organization.id
-}
+# The following is not done, but you could provision
+# the per-region Activity tracker here. It would serve
+# all of your environments.
 
+/* # Create an Activity Tracker instance in this region
+resource "ibm_resource_instance" "activity_tracker" {
+  name = "activity-tracker-${var.region}"
+  service = "logdnaat"
+  plan = "lite"
+  location = var.region
+} */

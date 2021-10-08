@@ -1,12 +1,4 @@
-# a Cloud Foundry space per environment
-resource "ibm_space" "space" {
-  name       = var.environment_name
-  org        = data.terraform_remote_state.global.outputs.org_name
-  managers   = var.space_managers
-  auditors   = var.space_auditors
-  developers = var.space_developers
-}
-
+# new resource group for the environment
 resource "ibm_resource_group" "group" {
   name = var.environment_name
 }
@@ -51,50 +43,73 @@ resource "ibm_resource_instance" "monitoring" {
 }
 
 #############################
-# Create a kubernetes cluster
+# Create a VPC with a VSI
 #############################
 resource "ibm_is_vpc" "vpc1" {
-  name = var.environment_name
+  name              = var.environment_name
+  resource_group    = ibm_resource_group.group.id
 }
 
 resource "ibm_is_subnet" "subnet11" {
   name                     = "${var.environment_name}-1"
   vpc                      = ibm_is_vpc.vpc1.id
-  zone                     = var.cluster_datacenter
+  zone                     = var.network_zone
   total_ipv4_address_count = 256
 }
 
-resource "ibm_container_vpc_cluster" "cluster" {
-  name              = "${var.environment_name}-cluster"
-  vpc_id            = ibm_is_vpc.vpc1.id
-  kube_version      = "1.19"
-  flavor            = var.cluster_machine_type
-  worker_count      = var.worker_num
-  resource_group_id = ibm_resource_group.group.id
+# Image type for the VSI
+data "ibm_is_image" "vsi_image" {
+  name = "ibm-ubuntu-18-04-1-minimal-amd64-2"
+}
 
-  zones {
-    subnet_id = ibm_is_subnet.subnet11.id
-    name      = var.cluster_datacenter
+# Generate a private / public key for ssh access to the VSI.
+# See outputs.tf for how the key is exported.
+resource "tls_private_key" "ssh" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "ibm_is_ssh_key" "generated_key" {
+  name           = "${var.environment_name}-key"
+  public_key     = tls_private_key.ssh.public_key_openssh
+  resource_group = ibm_resource_group.group.id
+}
+
+output "generated_key" {
+  value     = ibm_is_ssh_key.generated_key
+  sensitive = true
+}
+
+# The VSI
+resource "ibm_is_instance" "vsi1" {
+  name           = "${var.environment_name}-vsi1"
+  vpc            = ibm_is_vpc.vpc1.id
+  zone           = "${var.region}-1"
+  profile        = "cx2-2x4"
+  image          = data.ibm_is_image.vsi_image.id
+  keys           = [ibm_is_ssh_key.generated_key.id]
+  resource_group = ibm_resource_group.group.id
+  
+  primary_network_interface {
+    subnet = ibm_is_subnet.subnet11.id
   }
+
 }
 
-##############################
-# Bind services to the cluster
-##############################
-# bind the database service to the cluster
-resource "ibm_container_bind_service" "bind_database" {
-  cluster_name_id       = ibm_container_vpc_cluster.cluster.id
-  service_instance_name = ibm_resource_instance.database.name
-  namespace_id          = "default"
-  resource_group_id     = ibm_resource_group.group.id
-  role                  = "manager"
+# Add a floating IP address
+resource "ibm_is_floating_ip" "vsi1_ip" {
+  name           = "${var.environment_name}-vsi1-ip"
+  target         = ibm_is_instance.vsi1.primary_network_interface.0.id
+  resource_group = ibm_resource_group.group.id
 }
 
-# bind the cloud object storage service to the cluster
-resource "ibm_container_bind_service" "bind_objectstorage" {
-  cluster_name_id = ibm_container_vpc_cluster.cluster.id
-  service_instance_id = ibm_resource_instance.objectstorage.guid
-  namespace_id        = "default"
-  resource_group_id   = ibm_resource_group.group.id
-  role = "manager"
+# Add a rule to the default security group to allow ssh-based access
+resource "ibm_is_security_group_rule" "vsi1_ssh_rule" {
+  group     = ibm_is_vpc.vpc1.default_security_group
+  direction = "inbound"
+  remote    = "0.0.0.0/0"
+  tcp {
+    port_min = 22
+    port_max = 22
+  }
 }

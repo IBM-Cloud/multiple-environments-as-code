@@ -1,7 +1,5 @@
 environment_name = "development"
 
-space_developers = [ ]
-
 # Replace REGION below with us-south, us-east, eu-de, ...
 # $ ibmcloud is regions
 
@@ -10,16 +8,10 @@ space_developers = [ ]
 # choose the Name of a region
 region = "REGION"
 
-# $ ibmcloud ks locations --provider vpc-gen2
-# choose a Zone, like us-soputh-1, used in $datacenter below
-cluster_datacenter = "REGION-1"
+# $ ibmcloud is zones
+# choose a Zone, like us-south-1
+network_zone = "REGION-1"
 
-worker_num = 2
-
-# Using the zone selected above in cluster_datacenter
-# $ ibmcloud ks flavors --zone ZONE
-# $ ibmcloud ks flavors --zone REGION-1
-cluster_machine_type = "cx2.2x4"
 
 # $ ibmcloud catalog service cloudantnosqldb
 # Children Name is a Plan like: lite or standard

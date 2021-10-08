@@ -4,33 +4,12 @@ variable "ibmcloud_api_key" {
 variable "environment_name" {
 }
 
-variable "space_managers" {
-  type    = list(string)
-  default = []
-}
-
-variable "space_auditors" {
-  type    = list(string)
-  default = []
-}
-
-variable "space_developers" {
-  type    = list(string)
-  default = []
-}
-
 variable "region" {
 }
 
-variable "cluster_datacenter" {
+variable "network_zone" {
 }
 
-
-variable "cluster_machine_type" {
-}
-
-variable "worker_num" {
-}
 
 variable "cloudantnosqldb_plan" {
 }
