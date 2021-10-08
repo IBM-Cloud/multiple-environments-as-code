@@ -53,7 +53,7 @@ resource "ibm_is_vpc" "vpc1" {
 resource "ibm_is_subnet" "subnet11" {
   name                     = "${var.environment_name}-1"
   vpc                      = ibm_is_vpc.vpc1.id
-  zone                     = var.cluster_datacenter
+  zone                     = var.network_zone
   total_ipv4_address_count = 256
 }
 

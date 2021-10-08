@@ -7,7 +7,7 @@ variable "environment_name" {
 variable "region" {
 }
 
-variable "cluster_datacenter" {
+variable "network_zone" {
 }
 
 
