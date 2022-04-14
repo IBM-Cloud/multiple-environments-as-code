@@ -46,8 +46,8 @@ resource "ibm_resource_instance" "monitoring" {
 # Create a VPC with a VSI
 #############################
 resource "ibm_is_vpc" "vpc1" {
-  name              = var.environment_name
-  resource_group    = ibm_resource_group.group.id
+  name           = var.environment_name
+  resource_group = ibm_resource_group.group.id
 }
 
 resource "ibm_is_subnet" "subnet11" {
@@ -89,7 +89,7 @@ resource "ibm_is_instance" "vsi1" {
   image          = data.ibm_is_image.vsi_image.id
   keys           = [ibm_is_ssh_key.generated_key.id]
   resource_group = ibm_resource_group.group.id
-  
+
   primary_network_interface {
     subnet = ibm_is_subnet.subnet11.id
   }
