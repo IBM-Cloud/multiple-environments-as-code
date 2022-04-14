@@ -13,51 +13,51 @@ variable "access_group_description" {
 }
 
 variable "iam_access_members_developers" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "iam_access_members_testers" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "iam_access_members_operators" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "iam_access_members_pipeline" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "resource_group_roles_developer" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "resource_group_roles_operator" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "resource_group_roles_tester" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "resource_group_roles_pipeline" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "platform_access_roles" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "monitoring_service_roles" {
-  type    = list
+  type    = list(any)
   default = []
 }
